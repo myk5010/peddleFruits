@@ -5,13 +5,14 @@ Vue.use(Router)
 
 export default new Router({
     routes: [
-        {
-          path: '/index',
-          component: () => import('./views/laboratory/consumables/index.vue')
-        },
+        // 登录
         {
           path: '/',
-          component: () => import('./views/laboratory/system/Login.vue')
-        }
+          component: () => import('./views/Login.vue')
+        },
+        // {
+        //   path: '/index',
+        //   component: () => import('./views/laboratory/consumables/index.vue')
+        // },
     ]
 })
