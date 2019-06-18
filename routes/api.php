@@ -17,5 +17,7 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
+// 测试
+Route::get('test', 'API\LoginController@getTest');
 // 登录
-Route::get('login', 'API\LoginController@signIn');
+Route::post('login', 'API\LoginController@signIn');

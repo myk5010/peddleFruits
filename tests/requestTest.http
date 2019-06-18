@@ -1,2 +1,15 @@
+# peddleFruits
+@host = http://127.0.0.1:99
+
+
 ### get请求测试
-GET http://127.0.0.1:99/api/login HTTP 1.1 
+GET {{host}}/api/test HTTP 1.1 
+
+
+### 登录
+POST http://127.0.0.1:99/api/login HTTP 1.1
+
+{
+    'email': 'mike@163.com'
+    'password': '123123'
+}

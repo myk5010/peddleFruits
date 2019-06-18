@@ -2,8 +2,8 @@
     <el-row>
         <el-col :span="6" :offset="14">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
-                <el-form-item label="账号" prop="name">
-                    <el-input v-model="ruleForm.name"></el-input>
+                <el-form-item label="账号" prop="email">
+                    <el-input v-model="ruleForm.email"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
                     <el-input v-model="ruleForm.password"></el-input>
@@ -25,11 +25,11 @@ export default {
     data() {
         return {
             ruleForm: {
-                name: '',
+                email: '',
                 password: ''
             },
             rules: {
-                name: [
+                email: [
                     { required: true, message: '请输入账号', trigger: 'blur' },
                 ],
                 password: [
