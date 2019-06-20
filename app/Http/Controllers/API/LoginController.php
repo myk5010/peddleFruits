@@ -15,8 +15,11 @@ class LoginController extends Controller
     public function signIn() {
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
             $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp')->accessToken;
-            return response()->json(['success' => $success], 200);
+            $res = [];
+            $res['token'] = $user->createToken('MyApp')->accessToken;
+            $res['userinfo']['name'] = $user->name;
+            $res['userinfo']['email'] = $user->email;
+            return response()->json($res, 200);
         }else{
             return response()->json(['error'=>'Unauthorised'], 401);
         }
@@ -39,7 +42,14 @@ class LoginController extends Controller
         $user = User::create($input);
         $success['token'] =  $user->createToken('MyApp')->accessToken;
         $success['name'] =  $user->name;
-        return response()->json(['success'=>$success, 'message'=>'注册成功'], 200);
+        return response()->json([$success, 'message'=>'注册成功'], 200);
+    }
+
+    // 测试auth认证
+    public function getDetails()
+    {
+        $user = Auth::user();
+        return response()->json(['success' => $user], 200);
     }
 
     // 测试

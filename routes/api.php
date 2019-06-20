@@ -21,3 +21,7 @@ use Illuminate\Http\Request;
 Route::get('test', 'API\LoginController@getTest');
 // 登录
 Route::post('login', 'API\LoginController@signIn');
+// auth认证过滤
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::get('getDetails', 'API\LoginController@getDetails');
+});

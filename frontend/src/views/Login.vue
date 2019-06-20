@@ -6,7 +6,7 @@
                     <el-input v-model="ruleForm.email"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
-                    <el-input v-model="ruleForm.password"></el-input>
+                    <el-input type="password" v-model="ruleForm.password"></el-input>
                 </el-form-item>
                 <el-form-item style="text-align:center;">
                     <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
@@ -47,10 +47,20 @@ export default {
                         url: '/login',
                         data: this.ruleForm,
                     }).then(function(res){
-                        window.console.log(res)
+                        this.$message({
+                            showClose: true,
+                            message: '登录成功',
+                            type: 'success'
+                        })
+                        // 设置token
+                        this.$ajax.defaults.headers.Authorization = 'Bearer '+res.data.token
+                        // 保存用户信息
+                        this.$store.commit('ADD_LOGIN_USER', {'authKey': res.data.token, 'userInfo': res.data.userInfo})
+                        // 跳转
+                        this.$router.push('/Admin/Index')
                     }.bind(this))
                 } else {
-                    console.log('error submit!!');
+                    console.log('error login!!');
                     return false;
                 }
             });
