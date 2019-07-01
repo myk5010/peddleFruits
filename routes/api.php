@@ -18,10 +18,18 @@ use Illuminate\Http\Request;
 // });
 
 // 测试
-Route::get('test', 'API\LoginController@getTest');
+Route::get('/test', 'API\LoginController@getTest');
 // 登录
-Route::post('login', 'API\LoginController@signIn');
+Route::post('/login', 'API\LoginController@signIn');
 // auth认证过滤
 Route::group(['middleware' => 'auth:api'], function(){
-    Route::get('getDetails', 'API\LoginController@getDetails');
+    Route::get('/getDetails', 'API\LoginController@getDetails');
+    /*
+    |--------------------------------------------------------------------------
+    | 后台管理-admin
+    |--------------------------------------------------------------------------
+    */
+    /* 小麦报价单-fruits */
+    // 水果分类
+    Route::get('/admin/fruits/category', 'Admin\Fruits\CategoryController@getCategory');
 });
