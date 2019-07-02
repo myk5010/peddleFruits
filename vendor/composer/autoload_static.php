@@ -468,6 +468,7 @@ class ComposerStaticInitd1d3d26d17c5157c9a8feabd7710a048
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\API\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/LoginController.php',
         'App\\Http\\Controllers\\Admin\\Fruits\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Fruits/CategoryController.php',
+        'App\\Http\\Controllers\\Admin\\Fruits\\DetailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Fruits/DetailController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\SpaController' => __DIR__ . '/../..' . '/app/Http/Controllers/SpaController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',

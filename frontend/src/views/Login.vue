@@ -42,6 +42,18 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    // 注册
+                    // this.$ajax({
+                    //     method: 'post',
+                    //     url: '/register',
+                    //     data: {
+                    //         'name':'mike',
+                    //         'email':'mike@163.com',
+                    //         'password':'123123',
+                    //         'c_password':'123123',
+                    //     },
+                    // }).then(function(res){
+                    // }.bind(this))
                     this.$ajax({
                         method: 'post',
                         url: '/login',

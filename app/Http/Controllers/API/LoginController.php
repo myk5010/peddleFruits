@@ -17,6 +17,7 @@ class LoginController extends Controller
             $user = Auth::user();
             $res = [];
             $res['token'] = $user->createToken('MyApp')->accessToken;
+            var_dump($res);exit;
             $res['userinfo']['name'] = $user->name;
             $res['userinfo']['email'] = $user->email;
             return response()->json($res, 200);
