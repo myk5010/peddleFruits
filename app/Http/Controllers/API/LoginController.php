@@ -11,7 +11,6 @@ use Validator;
 class LoginController extends Controller
 {
     public function signIn() {
-        return 123;
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
             $user = Auth::user();
             $success['token'] =  $user->createToken('MyApp')->accessToken;
@@ -19,5 +18,10 @@ class LoginController extends Controller
         }else{
             return response()->json(['error'=>'Unauthorised'], 401);
         }
+    }
+
+    public function test()
+    {
+        return 123;
     }
 }
