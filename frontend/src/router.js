@@ -10,6 +10,11 @@ export default new Router({
           path: '/',
           component: () => import('./views/Login.vue')
         },
+        // 管理后台
+        {
+          path: '/admin/index',
+          component: () => import('./views/Admin/Index.vue')
+        },
         // {
         //   path: '/index',
         //   component: () => import('./views/laboratory/consumables/index.vue')

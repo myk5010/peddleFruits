@@ -2,11 +2,11 @@
     <el-row>
         <el-col :span="6" :offset="14">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
-                <el-form-item label="账号" prop="name">
-                    <el-input v-model="ruleForm.name"></el-input>
+                <el-form-item label="账号" prop="email">
+                    <el-input v-model="ruleForm.email"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
-                    <el-input v-model="ruleForm.password"></el-input>
+                    <el-input type="password" v-model="ruleForm.password"></el-input>
                 </el-form-item>
                 <el-form-item style="text-align:center;">
                     <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
@@ -25,11 +25,11 @@ export default {
     data() {
         return {
             ruleForm: {
-                name: '',
+                email: '',
                 password: ''
             },
             rules: {
-                name: [
+                email: [
                     { required: true, message: '请输入账号', trigger: 'blur' },
                 ],
                 password: [
@@ -42,15 +42,37 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    // 注册
+                    // this.$ajax({
+                    //     method: 'post',
+                    //     url: '/register',
+                    //     data: {
+                    //         'name':'mike',
+                    //         'email':'mike@163.com',
+                    //         'password':'123123',
+                    //         'c_password':'123123',
+                    //     },
+                    // }).then(function(res){
+                    // }.bind(this))
                     this.$ajax({
                         method: 'post',
                         url: '/login',
                         data: this.ruleForm,
                     }).then(function(res){
-                        window.console.log(res)
+                        this.$message({
+                            showClose: true,
+                            message: '登录成功',
+                            type: 'success'
+                        })
+                        // 设置token
+                        this.$ajax.defaults.headers.Authorization = 'Bearer '+res.data.token
+                        // 保存用户信息
+                        this.$store.commit('ADD_LOGIN_USER', {'authKey': res.data.token, 'userInfo': res.data.userInfo})
+                        // 跳转
+                        this.$router.push('/Admin/Index')
                     }.bind(this))
                 } else {
-                    console.log('error submit!!');
+                    console.log('error login!!');
                     return false;
                 }
             });
