@@ -1,5 +1,9 @@
 <template>
-    <el-row>
+    <el-row  
+    v-loading="loading"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)">
        <el-tree
             :data="categoryData"
             show-checkbox
@@ -20,6 +24,7 @@ export default {
     },
     data() {
         return {
+            loading: true,
             categoryData: [],
             defaultProps: {
                 label:'name'
@@ -34,6 +39,7 @@ export default {
                 url: '/admin/fruits/category',
             }).then(function(res){
                 this.categoryData = res.data
+                this.loading = false
             }.bind(this))
         },
         append(data) {

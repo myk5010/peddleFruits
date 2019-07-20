@@ -34,4 +34,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     /* 小麦报价单-fruits */
     // 水果分类
     Route::get('/admin/fruits/category', 'Admin\Fruits\CategoryController@getCategory');
+    // 获取水果分类详情
+    Route::post('/admin/fruits/detail', 'Admin\Fruits\DetailController@getDetail');
+    // 修改水果分类详情
+    Route::post('/admin/fruits/saveDetail', 'Admin\Fruits\DetailController@saveDetail');
+    // 图片上传
+    Route::post('/admin/fruits/uploadPicture', 'Admin\Fruits\DetailController@uploadPicture');
 });
