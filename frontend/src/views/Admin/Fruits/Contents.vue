@@ -68,7 +68,7 @@
                 </el-form-item>
             </el-col>
             <el-col :span="24" style="text-align:center;">
-                <el-button>提 交</el-button>
+                <el-button @click="submitContent">提 交</el-button>
             </el-col>
         </el-form>
     </el-row>
@@ -93,7 +93,7 @@ export default {
                 last_offer: '',
                 current_offer: '',
                 final_offer: '',
-                picture_address: ''
+                picture_address: []
             },
             dialogImageUrl: '',
             dialogVisible: false,
@@ -144,13 +144,14 @@ export default {
         },
         // 提交修改
         submitContent () {
-            this.$ajax({
-                method: 'post',
-                url: '/admin/fruits/saveDetail',
-                data: this.form
-            }).then(function(res){
-                // this.options = res.data
-            }.bind(this))
+            console.log(this.form);
+            // this.$ajax({
+            //     method: 'post',
+            //     url: '/admin/fruits/saveDetail',
+            //     data: this.form
+            // }).then(function(res){
+            //     // this.options = res.data
+            // }.bind(this))
         }
     },
     mounted () {

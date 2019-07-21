@@ -22,6 +22,7 @@ class DetailController
         }
     }
 
+    // 保存详情
     public function saveDetail()
     {
         
@@ -30,28 +31,21 @@ class DetailController
     // 上传图片
     public function uploadPicture()
     {
-        $photo = request('file');
-        if ($photo && $photo->isValid()) {
-            $destinationPath = storage_path('app/public/photos/' . $parentCafe->id);
-
-            // 如果目标目录不存在，则创建之
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath);
+        $file = request('file');
+        $url_path = storage_path('app/public/fruits');  // 图片暂存storage - 定期清理缓存
+        $rule = ['jpg', 'png', 'gif'];
+        if ($file->isValid()) {
+            $clientName = $file->getClientOriginalName();
+            $tmpName = $file->getFileName();
+            $realPath = $file->getRealPath();
+            $entension = $file->getClientOriginalExtension();
+            if (!in_array($entension, $rule)) {
+                return '图片格式为jpg,png,gif';
             }
-
-            // 文件名
-            $filename = time() . '-' . $photo->getClientOriginalName();
-            // 保存文件到目标目录
-            $photo->move($destinationPath, $filename);
-
-            // 在数据库中创建新纪录保存刚刚上传的文件
-            $cafePhoto = new CafePhoto();
-
-            $cafePhoto->cafe_id = $parentCafe->id;
-            $cafePhoto->uploaded_by = Auth::user()->id;
-            $cafePhoto->file_url = $destinationPath . DIRECTORY_SEPARATOR . $filename;
-
-            $cafePhoto->save();
+            $newName = md5(date("Y-m-d H:i:s") . $clientName) . "." . $entension;
+            $path = $file->move($url_path, $newName);
+            $namePath = $url_path . '/' . $newName;
+            return $path;
         }
     }
 }
