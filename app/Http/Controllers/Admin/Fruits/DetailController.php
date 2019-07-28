@@ -8,6 +8,7 @@ use App\Models\Fruits\Detail;
 
 class DetailController
 {   
+
     // 获取分类下商品详情
     public function getDetail()
     {
@@ -16,7 +17,12 @@ class DetailController
         $detailModel = new Detail();
         $res = $detailModel->where('c_id', '=', $categoryId)->get();
         if ($res) {
-            return response()->json(['status' => 'success', 'message' => '获取成功', 'content' => $res]);
+            // 如果该分类下没有详情
+            if (count($res) == 0) {
+                return response()->json(['status' => 'success', 'message' => '获取成功', 'content' => ['c_id'=>$categoryId]]);
+            } else {
+                return response()->json(['status' => 'success', 'message' => '获取成功', 'content' => $res[0]]);
+            }
         } else {
             return response()->json(['status' => 'error', 'message' => '获取失败']);
         }
@@ -25,7 +31,22 @@ class DetailController
     // 保存详情
     public function saveDetail()
     {
-        
+        $params = request()->all();
+        $detailModel = new Detail();
+        // 确认分类下有没详情
+        $contentId = $detailModel->where('c_id', '=', $params['c_id'])->get();
+        if (count($contentId) > 0) {
+            // 更新详情
+            $res = $detailModel->where('id', $params['id'])->update($params);
+        } else {
+            // 保存详情
+            $res = $detailModel->insert($params);
+        }
+        if ($res) {
+            return response()->json(['status' => 'success', 'message' => '保存成功']);
+        } else {
+            return response()->json(['status' => 'error', 'message' => '保存失败']);
+        }
     }
 
     // 上传图片

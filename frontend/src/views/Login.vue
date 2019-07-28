@@ -1,5 +1,9 @@
 <template>
-    <el-row>
+    <el-row
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)">
         <el-col :span="6" :offset="14">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
                 <el-form-item label="账号" prop="email">
@@ -24,6 +28,7 @@ export default {
     },
     data() {
         return {
+            loading: false,
             ruleForm: {
                 email: '',
                 password: ''
@@ -42,6 +47,7 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    this.loading = true
                     // 注册
                     // this.$ajax({
                     //     method: 'post',
@@ -59,6 +65,7 @@ export default {
                         url: '/login',
                         data: this.ruleForm,
                     }).then(function(res){
+                        this.loading = false
                         this.$message({
                             showClose: true,
                             message: '登录成功',

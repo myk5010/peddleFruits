@@ -136,7 +136,8 @@ export default {
                     message: res.data.message,
                     type: res.data.status,
                 })
-                if (res.data.status == 'success' && res.data.content.length > 0) {
+                if (res.data.status == 'success') {
+                    console.log(res.data.content);
                     this.form = res.data.content
                 }
                 this.loading = false
@@ -145,13 +146,17 @@ export default {
         // 提交修改
         submitContent () {
             console.log(this.form);
-            // this.$ajax({
-            //     method: 'post',
-            //     url: '/admin/fruits/saveDetail',
-            //     data: this.form
-            // }).then(function(res){
-            //     // this.options = res.data
-            // }.bind(this))
+            this.$ajax({
+                method: 'post',
+                url: '/admin/fruits/saveDetail',
+                data: this.form
+            }).then(function(res){
+                this.$message({
+                    showClose: true,
+                    message: res.data.message,
+                    type: res.data.status,
+                })
+            }.bind(this))
         }
     },
     mounted () {
