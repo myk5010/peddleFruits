@@ -66,7 +66,14 @@ class DetailController
             $newName = md5(date("Y-m-d H:i:s") . $clientName) . "." . $entension;
             $path = $file->move($url_path, $newName);
             $namePath = $url_path . '/' . $newName;
-            return $path;
+            $data=[
+               'tmpName' => $tmpName ,
+               'realPath' => $realPath ,
+               'path' => $path ,
+               'namePath' => $namePath ,
+               'newName' => $newName,
+            ];
+            return $data;
         }
     }
 }
