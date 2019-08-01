@@ -56,7 +56,9 @@
                 <el-form-item label="水果图片">
                     <el-upload
                         :action="picture_url"
+                        :file-list="fileList"
                         list-type="picture-card"
+                        :on-success="handleAvatarSuccess"
                         :on-preview="handlePictureCardPreview"
                         :headers = 'picture_headers'
                         :on-remove="handleRemove">
@@ -85,6 +87,7 @@ export default {
             loading: true,
             options: [],
             categoryId: '',
+            fileList: [],
             form: {
                 c_id: '',
                 spec: '',
@@ -116,13 +119,17 @@ export default {
         },
         // 图片上传
         handleRemove(file, fileList) {
-            console.log(file, fileList);
+            console.log(file, fileList)
         },
         handlePictureCardPreview(file) {
-            console.log();
-            
-            this.dialogImageUrl = file.url;
-            this.dialogVisible = true;
+            this.dialogImageUrl = file.url
+            this.dialogVisible = true
+        },
+        handleAvatarSuccess(res, file) {
+            console.log(this.fileList);
+            this.form.picture_address = []
+            this.form.picture_address.push(file.response.data)
+            this.imageUrl = URL.createObjectURL(file.raw)
         },
         // 选择分类
         selectCategory (value) {

@@ -9,7 +9,7 @@ use App\Models\Fruits\Detail;
 class DetailController extends Controller
 {   
 
-    public $url_path = '';  // 图片暂存storage - 定期清理缓存
+    public $url_path = ''; 
 
     // 获取分类下商品详情
     public function getDetail()
@@ -35,6 +35,8 @@ class DetailController extends Controller
     {
         $params = request()->all();
         $detailModel = new Detail();
+        // 处理图片 ----TODO
+        $params['picture_address'] = json_encode($params['picture_address']);
         // 确认分类下有没详情
         $contentId = $detailModel->where('c_id', '=', $params['c_id'])->get();
         if (count($contentId) > 0) {
@@ -55,7 +57,7 @@ class DetailController extends Controller
     public function uploadPicture()
     {
         $file = request('file');
-        $url_path = $this->url_path = storage_path('app/public/fruits');
+        $url_path = $this->url_path = storage_path('app/public/fruits');  // 图片暂存storage
         $rule = ['jpg', 'png', 'gif'];
         if ($file->isValid()) {
             $clientName = $file->getClientOriginalName();
