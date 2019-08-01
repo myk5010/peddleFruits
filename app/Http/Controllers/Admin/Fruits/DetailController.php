@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Fruits\Detail;
 
-class DetailController
+class DetailController extends Controller
 {   
+
+    public $url_path = '';  // 图片暂存storage - 定期清理缓存
 
     // 获取分类下商品详情
     public function getDetail()
@@ -53,27 +55,20 @@ class DetailController
     public function uploadPicture()
     {
         $file = request('file');
-        $url_path = storage_path('app/public/fruits');  // 图片暂存storage - 定期清理缓存
+        $url_path = $this->url_path = storage_path('app/public/fruits');
         $rule = ['jpg', 'png', 'gif'];
         if ($file->isValid()) {
             $clientName = $file->getClientOriginalName();
-            $tmpName = $file->getFileName();
-            $realPath = $file->getRealPath();
+            // $tmpName = $file->getFileName();
+            // $realPath = $file->getRealPath();
             $entension = $file->getClientOriginalExtension();
             if (!in_array($entension, $rule)) {
                 return '图片格式为jpg,png,gif';
             }
             $newName = md5(date("Y-m-d H:i:s") . $clientName) . "." . $entension;
-            $path = $file->move($url_path, $newName);
-            $namePath = $url_path . '/' . $newName;
-            $data=[
-               'tmpName' => $tmpName ,
-               'realPath' => $realPath ,
-               'path' => $path ,
-               'namePath' => $namePath ,
-               'newName' => $newName,
-            ];
-            return $data;
+            $file->move($url_path, $newName);
+            // $namePath = $url_path . '/' . $newName;
+            return response()->json(['status' => 'success', 'message' => '上传成功', 'data' => $newName]);;
         }
     }
 }
