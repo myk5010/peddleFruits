@@ -96,7 +96,6 @@ export default {
                 last_offer: '',
                 current_offer: '',
                 final_offer: '',
-                picture_address: '',
             },
             // 图片上传配置
             picture_url: process.env.VUE_APP_API_HOST + 'admin/fruits/uploadPicture',
@@ -184,7 +183,6 @@ export default {
         },
         // 提交修改
         submitContent () {
-            this.form.picture_address = JSON.stringify(this.tmpFileList)
             this.$ajax({
                 method: 'post',
                 url: '/admin/fruits/saveDetail',
