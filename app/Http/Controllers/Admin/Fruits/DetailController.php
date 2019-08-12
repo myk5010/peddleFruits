@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Fruits;
 use App\Http\Controllers\Controller;
 use App\Models\Fruits\Detail;
 use App\Models\Common\UploadPicture;
+use function GuzzleHttp\json_decode;
 
 class DetailController extends Controller
 {   
@@ -57,12 +58,15 @@ class DetailController extends Controller
         $detailModel = new Detail();
         // 确认分类下有没详情
         $contentId = $detailModel->where('c_id', '=', $params['c_id'])->get();
+        // 过滤非数据库字段
+        $data = $detailModel->fill($params);
+        $data = json_decode($data, true);
         if (count($contentId) > 0) {
             // 更新详情
-            $res = $detailModel->where('id', $params['id'])->update($params);
+            $res = $detailModel->where('id',$contentId[0]['id'])->update((array)$data);
         } else {
             // 保存详情
-            $res = $detailModel->insert($params);
+            $res = $detailModel->insert($data);
         }
         if ($res) {
             return response()->json(['status' => 'success', 'message' => '保存成功']);

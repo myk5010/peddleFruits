@@ -176,6 +176,8 @@ export default {
                     // 图片列表
                     if (res.data.data.pictrue_list) {
                         this.fileList = res.data.data.pictrue_list
+                    } else {
+                        this.fileList = []
                     }
                 }
                 this.loading = false
