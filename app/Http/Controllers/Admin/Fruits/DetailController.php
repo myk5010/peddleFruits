@@ -100,7 +100,7 @@ class DetailController extends Controller
             // 写入数据库
             $insertData = [];
             $insertData['name'] = $clientName;
-            $insertData['url'] = '/upload/pictures/fruits/'.$newName;
+            $insertData['url'] = '/upload/pictures/fruits/'.$id.'/'.$newName;
             if ($id == 0){
                 // 如果父级没有详情, 先写入一条父级
                 $insertData['parent_id'] = Detail::insertGetId(['c_id'=>$cid]);
