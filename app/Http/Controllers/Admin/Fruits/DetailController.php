@@ -81,6 +81,9 @@ class DetailController extends Controller
         $file = request('file');
         $id = request('id');
         $cid = request('cid');
+        if ($cid == 0) {
+            return response()->json(['status' => 'error', 'message' => '请先选择水果分类再上传图片']);
+        }
         $url_path = base_path('public/upload/pictures/fruits').'/'.$id;
         $rule = ['jpg', 'png', 'gif'];
         if ($file->isValid()) {
