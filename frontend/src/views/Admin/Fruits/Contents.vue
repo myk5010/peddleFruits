@@ -126,6 +126,7 @@ export default {
         },
         // 删除图片
         handleRemove(file) {
+            console.log(file);
             this.$ajax({
                 method: 'post',
                 url: '/admin/fruits/deletePicture',
