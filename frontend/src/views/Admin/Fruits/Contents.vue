@@ -125,12 +125,15 @@ export default {
             }.bind(this))
         },
         // 删除图片
-        handleRemove(file) {
-            console.log(file);
+        handleRemove(file, fileList) {
+            console.log(fileList);
             this.$ajax({
                 method: 'post',
                 url: '/admin/fruits/deletePicture',
-                data: {'id' : file.response.data.id},
+                // 本地
+                // data: {'id' : file.response.data.id},
+                // 打包编译后
+                data: {'id' : file.id},
             }).then(function(res){
                 this.$message({
                     message: res.data.message,
