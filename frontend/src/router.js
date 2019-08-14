@@ -15,9 +15,9 @@ export default new Router({
           path: '/admin/index',
           component: () => import('./views/Admin/Index.vue')
         },
-        // {
-        //   path: '/index',
-        //   component: () => import('./views/laboratory/consumables/index.vue')
-        // },
+        {
+          path: '/front',
+          component: () => import('./views/Front/Index.vue')
+        },
     ]
 })

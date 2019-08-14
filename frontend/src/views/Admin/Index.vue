@@ -65,9 +65,6 @@ export default {
             this.currentModel = key
         },
     },
-    // mounted () {
-    //     this.getList()
-    // },
 };
 </script>
 
