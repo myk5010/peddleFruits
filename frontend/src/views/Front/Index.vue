@@ -25,9 +25,8 @@
             </el-aside>
             <el-main>
                 <el-carousel :interval="4000" type="card" height="400px">
-                    <el-carousel-item v-for="item in 6" :key="item">
-                        <h3 class="medium">{{ item }}</h3>
-                        <!-- <img src="/public/upload/pictures/fruits/1/02f27ab953c3506ad8ff80a4a0643230.jpg"> -->
+                    <el-carousel-item v-for="(item, key) in pictrue_list" :key="key">
+                        <img :src="getImgUrl(item)">
                     </el-carousel-item>
                 </el-carousel>
                 <el-row type="flex" class="row-bg" justify="space-around" style="margin-top:40px;">
@@ -37,13 +36,13 @@
                                 <span>参数</span>
                             </div>
                             <div class="text item">
-                                规格: 
+                                规格: {{ fruitsContent.spec }}
                             </div>
                             <div class="text item">
-                                品牌: 
+                                品牌: {{ fruitsContent.brand }}
                             </div>
                             <div class="text item">
-                                单位: 
+                                单位: {{ fruitsContent.unit }}
                             </div>
                         </el-card>
                     </el-col>
@@ -53,13 +52,13 @@
                                 <span>报价</span>
                             </div>
                             <div class="text item">
-                                上次报价: 元
+                                上次报价: {{ fruitsContent.last_offer }}元
                             </div>
                             <div class="text item">
-                                本次报价: 元
+                                本次报价: {{ fruitsContent.current_offer }}元
                             </div>
                             <div class="text item">
-                                核定报价: 元
+                                核定报价: {{ fruitsContent.final_offer }}元
                             </div>
                         </el-card>
                     </el-col>
@@ -68,14 +67,8 @@
                             <div slot="header" class="clearfix">
                                 <span>质量承诺(保质期)</span>
                             </div>
-                            <div class="text item">
-                                1 : 
-                            </div>
-                            <div class="text item">
-                                2 : 
-                            </div>
-                            <div class="text item">
-                                3 : 
+                            <div class="text item" style="min-height: 62px;">
+                                {{ fruitsContent.quality }}
                             </div>
                         </el-card>
                     </el-col>
@@ -104,24 +97,49 @@ export default {
             // 水果分类
             categoryData: [],
             activeMenu: '',
+            // 水果详情
+            fruitsContent: {},
+            pictrue_list: [],
         }
     },
     methods: {
         // 动态调用组件
         handleSelect(key) {
-            console.log(key);
-            // this.currentModel = key
+            this.selectCategory(key)
         },
         getCategory() {
+            this.loading = true
             this.$ajax({
                 method: 'get',
                 url: '/admin/fruits/category',
             }).then(function(res){
                 this.categoryData = res.data
                 this.activeMenu = (this.categoryData[0]['children'][0]['id']).toString()
+                this.selectCategory(this.activeMenu)
+            }.bind(this))
+        },
+        // 获取分类详情
+        selectCategory (value) {
+            this.loading = true
+            // 获取分类详情
+            this.$ajax({
+                method: 'post',
+                url: '/admin/fruits/detail',
+                data: {'categoryId' : value},
+            }).then(function(res){
+                this.$message({
+                    message: res.data.message,
+                    type: res.data.status,
+                })
+                this.fruitsContent = res.data.data
+                this.pictrue_list = res.data.data.pictrue_list
                 this.loading = false
             }.bind(this))
         },
+        // 拼接图片路径
+        getImgUrl(item){
+            return process.env.VUE_APP_BASE_HOST + item.url;
+        }
     },
     mounted () {
         this.getCategory()
@@ -134,19 +152,11 @@ export default {
     .el-header {
         padding: 0;
     }
-    .el-carousel__item h3 {
-        color: #475669;
+    .el-carousel__item {
         font-size: 14px;
         opacity: 0.75;
         line-height: 200px;
         margin: 0;
-    }
-    
-    .el-carousel__item:nth-child(2n) {
-        background-color: #99a9bf;
-    }
-    
-    .el-carousel__item:nth-child(2n+1) {
-        background-color: #d3dce6;
+        text-align: center;
     }
 </style>
