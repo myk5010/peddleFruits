@@ -7,7 +7,7 @@ export default new Router({
     routes: [
         // 登录
         {
-          path: '/',
+          path: '/login',
           component: () => import('./views/Login.vue')
         },
         // 管理后台
@@ -16,7 +16,7 @@ export default new Router({
           component: () => import('./views/Admin/Index.vue')
         },
         {
-          path: '/front',
+          path: '/',
           component: () => import('./views/Front/Index.vue')
         },
     ]
