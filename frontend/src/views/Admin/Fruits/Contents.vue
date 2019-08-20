@@ -171,6 +171,7 @@ export default {
                     // 图片参数
                     if (res.data.data.id){
                         this.picture_parent.id = res.data.data.id
+                        console.log(this.picture_parent);
                     } else {
                         // 如果此分类下还没有详情记录
                         this.picture_parent.id = 0
